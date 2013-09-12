@@ -1,6 +1,5 @@
 /*global frontend, $*/
 
-
 window.frontend = {
     Models: {},
     Collections: {},

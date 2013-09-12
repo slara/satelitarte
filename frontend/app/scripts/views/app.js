@@ -17,12 +17,10 @@ frontend.Views = frontend.Views || {};
             console.log('addAll Category');
             this.collection.forEach(function (category) {
                 console.log(category);
-                var categoryView = new frontend.Views.CategorySelectorView({model: category});
-                $('#category-selector').append(categoryView.render().el);
+                var categoryView = new frontend.Views.CategoryPanelView({model: category});
+                $('#selector').append(categoryView.render().el);
             });
         }
-
-
 
     });
 

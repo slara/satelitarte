@@ -9,8 +9,8 @@ frontend.Models = frontend.Models || {};
 
         defaults: {
             'name': '',
-            'image1': '',
-            'image2': ''
+            'images': [],
+            'selected': false
         }
 
     });

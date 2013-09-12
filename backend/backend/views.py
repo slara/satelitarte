@@ -11,7 +11,7 @@ def categories(request):
     categories = DBSession.query(Category).all()
     cats = []
     for category in categories:
-        cats.append({'name': category.name,
-                    'image1': category.image1,
-                    'image2': category.image2})
+        cats.append({'id': category.id,
+                     'name': category.name,
+                     'images': [img.filename for img in category.images]})
     return cats

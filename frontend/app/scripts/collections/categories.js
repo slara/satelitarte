@@ -9,7 +9,7 @@ frontend.Collections = frontend.Collections || {};
 
         model: frontend.Models.CategoryModel,
 
-        url: 'http://localhost:6543/categories',
+        url: 'http://152.74.221.197:6543/categories',
 
         initialize: function  () {
         }

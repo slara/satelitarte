@@ -1,6 +1,9 @@
 import os
 import sys
+
 import transaction
+from os import listdir
+
 
 from sqlalchemy import engine_from_config
 
@@ -14,7 +17,8 @@ from pyramid.scripts.common import parse_vars
 from ..models import (
     DBSession,
     Category,
-    Base,
+    Image,
+    Base
 )
 
 
@@ -34,9 +38,25 @@ def main(argv=sys.argv):
     settings = get_appsettings(config_uri, options=options)
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
+    Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        volcanes = Category(name='Volcanes')
-        DBSession.add(volcanes)
-        glaciares = Category(name='Glaciares')
-        DBSession.add(glaciares)
+        print os.path.abspath('.')
+        catdir = '../frontend/app/images/temas'
+        for cat in listdir(catdir):
+            name = cat.replace('_', ' ')
+            name = name[0].upper() + name[1:]
+            category = Category(name)
+            print name
+            DBSession.add(category)
+            for imgfile in listdir(catdir + '/' + cat):
+                print '\t' + imgfile
+                image = Image('images/temas/' + cat + '/' + imgfile)
+                image.category = category
+                DBSession.add(image)
+
+
+
+
+
+

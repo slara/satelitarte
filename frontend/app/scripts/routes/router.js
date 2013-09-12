@@ -8,7 +8,6 @@ frontend.Routers = frontend.Routers || {};
     frontend.Routers.Router = Backbone.Router.extend({
 
         routes: {
-            '': 'showCategory',
             ':id': 'showCategory'
         },
 
@@ -21,6 +20,13 @@ frontend.Routers = frontend.Routers || {};
 
         showCategory: function (category) {
             console.log('showCategory:', category);
+            var catmodel = this.categories.get(category);
+            if (this.modal !== undefined) {
+                this.modal.remove();
+            }
+            this.modal = new frontend.Views.JumboView({model: catmodel});
+            $('#modalContent').append(this.modal.render().el);
+            this.modal.show();
         }
 
     });
