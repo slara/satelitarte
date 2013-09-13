@@ -16,9 +16,10 @@ frontend.Views = frontend.Views || {};
         addAll: function () {
             console.log('addAll Category');
             this.collection.forEach(function (category) {
-                console.log(category);
+                $('#panel-' + category.get('id')).remove();
                 var categoryView = new frontend.Views.CategoryPanelView({model: category});
                 $('#selector').append(categoryView.render().el);
+                category.view = categoryView;
             });
         }
 

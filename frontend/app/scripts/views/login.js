@@ -24,7 +24,13 @@ frontend.Views = frontend.Views || {};
 
         login: function () {
             console.log('login');
-            this.router.navigate('app', {trigger: true});
+            this.router.user.name = $('#loginname').val();
+            this.router.user.password = $('#loginpassword').val();
+
+            if (this.router.user.password === 'secret') {
+                this.router.navigate('app', {trigger: true});
+            }
+
         }
 
     });

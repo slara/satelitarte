@@ -18,16 +18,21 @@ frontend.Routers = frontend.Routers || {};
         },
 
         login: function() {
+            this.user = {};
             this.loginView = new frontend.Views.LoginView();
             this.loginView.router = this;
             $('#login').append(this.loginView.render().el);
         },
 
         app: function () {
-            this.loginView.remove();
+            console.log(this.user);
+            if (this.loginView !== undefined) {
+                this.loginView.remove();
+            }
             this.categories = new frontend.Collections.CategoriesCollection();
             this.categories.fetch({'reset': true});
             this.appView = new frontend.Views.AppView({collection: this.categories});
+            this.appView.router = this;
         },
 
 
@@ -38,6 +43,7 @@ frontend.Routers = frontend.Routers || {};
                 this.modal.remove();
             }
             this.modal = new frontend.Views.JumboView({model: catmodel});
+            this.modal.router = this;
             $('#modalContent').append(this.modal.render().el);
             this.modal.show();
         }

@@ -9,6 +9,10 @@ frontend.Views = frontend.Views || {};
 
         template: JST['app/scripts/templates/jumbo.ejs'],
 
+        events: {
+            'click #selectionsubmit': 'selectCategory'
+        },
+
         initialize: function () {
             this.render();
         },
@@ -20,6 +24,27 @@ frontend.Views = frontend.Views || {};
 
         show: function () {
             $('#categoryModal').modal('show');
+        },
+
+        selectCategory: function () {
+            console.log('Selected Category: ', this.model.get('name'));
+            console.log('User: ', this.router.user.name);
+            var category = this.model.get('id');
+            var participant = this.router.user.name;
+            var url = 'http://localhost:6543/selectcategory/' + participant + '/' + category;
+            var self = this;
+            $.getJSON(url, function(data) {
+                if (data.status === 'success') {
+                    $('#categoryModal').modal('hide');
+                    self.router.categories.fetch({'reset': true});
+                    window.location = 'http://www.cefop.cl';
+                } else {
+                    $('#categoryModal').modal('hide');
+                    var alert = new frontend.Views.ClashAlertView({message: data.status});
+                    $('#alert-container').append(alert.render().el);
+                    $('html, body').animate({ scrollTop: 0 }, 'fast');
+                }
+            }, this);
         }
 
     });

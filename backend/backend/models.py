@@ -46,7 +46,10 @@ class Participant(Base):
     id = Column(Integer, primary_key=True)
     name = Column(Unicode)
     category_id = Column(Integer, ForeignKey('categories.id'))
-    category = relationship("Category", backref=backref('category', uselist=False))
+    category = relationship("Category", backref=backref('participant', uselist=False))
+
+    def __init__(self, name):
+        self.name = name
 
 
 Index('my_index', Category.name, unique=True)
