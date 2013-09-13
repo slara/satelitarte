@@ -2,11 +2,10 @@ from sqlalchemy import (
     Column,
     Index,
     Integer,
-    Text,
-    Unicode
+    Unicode,
+    ForeignKey
 )
 
-from sqlalchemy import Table, Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship, backref
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -23,7 +22,7 @@ Base = declarative_base()
 
 
 class Category(Base):
-    __tablename__ = 'models'
+    __tablename__ = 'categories'
     id = Column(Integer, primary_key=True)
     name = Column(Unicode)
     images = relationship('Image', backref='category')
@@ -36,10 +35,18 @@ class Image(Base):
     __tablename__ = 'images'
     id = Column(Integer, primary_key=True)
     filename = Column(Unicode)
-    category_id = Column(Integer, ForeignKey('models.id'))
+    category_id = Column(Integer, ForeignKey('categories.id'))
 
     def __init__(self, filename):
         self.filename = filename
+
+
+class Participant(Base):
+    __tablename__ = 'participats'
+    id = Column(Integer, primary_key=True)
+    name = Column(Unicode)
+    category_id = Column(Integer, ForeignKey('categories.id'))
+    category = relationship("Category", backref=backref('category', uselist=False))
 
 
 Index('my_index', Category.name, unique=True)

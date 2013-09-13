@@ -12,8 +12,6 @@ from pyramid.paster import (
     setup_logging,
 )
 
-from pyramid.scripts.common import parse_vars
-
 from ..models import (
     DBSession,
     Category,
@@ -33,9 +31,8 @@ def main(argv=sys.argv):
     if len(argv) < 2:
         usage(argv)
     config_uri = argv[1]
-    options = parse_vars(argv[2:])
     setup_logging(config_uri)
-    settings = get_appsettings(config_uri, options=options)
+    settings = get_appsettings(config_uri)
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.drop_all(engine)
@@ -54,9 +51,3 @@ def main(argv=sys.argv):
                 image = Image('images/temas/' + cat + '/' + imgfile)
                 image.category = category
                 DBSession.add(image)
-
-
-
-
-
-
