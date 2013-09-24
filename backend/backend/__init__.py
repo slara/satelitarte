@@ -19,6 +19,8 @@ def main(global_config, **settings):
     config.add_route('categories', '/categories')
     config.add_route('participants', '/participants')
     config.add_route('selectcategory', '/selectcategory/{participant}/{category}')
+    config.add_route('catchall_static', '/*subpath')
+    config.add_view('backend.views.static_view', route_name='catchall_static')
     config.scan()
     return CORS(config.make_wsgi_app(),
                 headers="*", methods="*", maxage="180", origin="*")
