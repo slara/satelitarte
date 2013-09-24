@@ -31,7 +31,7 @@ frontend.Views = frontend.Views || {};
             console.log('User: ', this.router.user.name);
             var category = this.model.get('id');
             var participant = this.router.user.name;
-            var url = 'http://localhost:6543/selectcategory/' + participant + '/' + category;
+            var url = '/selectcategory/' + participant + '/' + category;
             var self = this;
             $.getJSON(url, function(data) {
                 if (data.status === 'success') {
