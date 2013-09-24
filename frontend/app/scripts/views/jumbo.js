@@ -39,10 +39,9 @@ frontend.Views = frontend.Views || {};
                     self.router.categories.fetch({'reset': true});
                     window.location = 'http://www.cefop.cl';
                 } else {
-                    $('#categoryModal').modal('hide');
+                    $('#categoryModal').modal('toggle');
                     var alert = new frontend.Views.ClashAlertView({message: data.status});
                     $('#alert-container').append(alert.render().el);
-                    $('html, body').animate({ scrollTop: 0 }, 'fast');
                 }
             }, this);
         }

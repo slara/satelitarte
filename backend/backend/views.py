@@ -1,10 +1,14 @@
 from pyramid.view import view_config
+from pyramid.static import static_view
 
 from .models import (
     DBSession,
     Category,
     Participant
 )
+
+
+static_view = static_view('../../frontend/dist', use_subpath=True)
 
 
 @view_config(route_name='categories', renderer='json')
